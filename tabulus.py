@@ -2,6 +2,7 @@
 # Originally created by Ayden Bridges
 # Ref material: https://docs.disnake.dev/en/stable/quickstart.html
 
+# Huh
 
 import disnake
 import logging
@@ -40,8 +41,8 @@ async def on_message(message):
     # Avoid a very dangerous self referential loop
     if message.author == client.user:
         return
-    
-    # Useful/relevant: https://stackoverflow.com/questions/29295654/what-does-python3-open-x-mode-do 
+
+    # Useful/relevant: https://stackoverflow.com/questions/29295654/what-does-python3-open-x-mode-do
 
     # Block to grab attendance numbers from an attendance thread
     if str(message.channel.type) == "public_thread" or str(message.channel.type) == "private_thread":
@@ -61,7 +62,7 @@ async def on_message(message):
             if msg[0].isnumeric():
                 data = {"date": datetime.now().strftime("%Y-%m-%d"), "time":datetime.now().strftime("%H:%M:%S"), "count":msg[0], "note":" ".join(msg[1:])}
                 fieldnames = list(data.keys())
-                
+
                 # If the attendance tracking csv has not already been made, make it, then append to it.
                 # Otherwise, just append to it.
                 try:
@@ -96,7 +97,7 @@ async def on_message(message):
         hack_version = ""
 
         # Need to completely redo my flags system man
-        # I think what I want to do is somehow iteratively cycle through the command string, detect if flags exist, 
+        # I think what I want to do is somehow iteratively cycle through the command string, detect if flags exist,
         # and if a given flag exists check the few characters after it for the actual flag value.
         # Unfortunately, that is way harder than it sounds.
         # I think detecting if the first char is a writing hand emoji, and then if the next "word" is a command is a good start.
@@ -111,7 +112,7 @@ async def on_message(message):
 
         for channel in message.guild.channels:
             if channel.name == ATTENDANCE_FORUM:
-                
+
                 thread_names = []
                 for thread in channel.threads:
                     thread_names.append(thread.name)
@@ -134,7 +135,7 @@ async def on_message(message):
     if DISABLE: print(message.content)
 
     print("\n---\n") # I just need some more spacing man
-        
+
     # TODO:
     # Core function:
     # detect if a message is sent in an attendance thread
@@ -144,11 +145,10 @@ async def on_message(message):
     # priority 1:
     # ping everyone in the thread every hour.
     # - start at 8? or 9?
-    # - go every hour until... idk what time. maybe like 6 am? can still log attendance afterwards. 
+    # - go every hour until... idk what time. maybe like 6 am? can still log attendance afterwards.
     # priority 2:
     # detect if a command is sent to start a thread.
     # - allow including a channel
     # - allow including a threadname to create it as (for events besides hack-night itself)
 
 client.run(CLIENT_TOKEN)
-
